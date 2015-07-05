@@ -2,7 +2,7 @@
 /// <reference path="../../__types__/expect.d.ts" />
 import Money from '../Money';
 import Currency from '../Currency';
-import NotSameCurrencyError from '../NotSameCurrencyError';
+import NotSameCurrencyError from '../exceptions/NotSameCurrencyError';
 
 describe("Money", function(){
     it("takes amount as first argument", function(){
@@ -27,6 +27,10 @@ describe("Money", function(){
             m2 = new Money(40);
             expect(m1.add(m2).amount).to.equal(60);
         });
+        it("works with numbers", () => {
+            var m1 = new Money(20);
+            expect(m1.add(30).amount).to.equal(50);
+        });
         it("returns new object", function(){
             var m1 = new Money(),
             m2 = new Money();
@@ -49,6 +53,10 @@ describe("Money", function(){
             let m1 = new Money(40, c),
             m2 = new Money(20, c);
             expect(m1.subtract(m2).amount).to.equal(20);
+        });
+        it("works with numbers", () => {
+            var m1 = new Money(20);
+            expect(m1.subtract(15).amount).to.equal(5);
         });
         it("returns new object", function(){
             var m1 = new Money(),

@@ -1,5 +1,5 @@
 import Currency from './Currency';
-import NotSameCurrencyError from './NotSameCurrencyError';
+import NotSameCurrencyError from './exceptions/NotSameCurrencyError';
 
 export default class Money{
     private _amount: number;
@@ -28,16 +28,40 @@ export default class Money{
     get currency(){
         return this._currency;
     }
-    add(term: Money): Money{
-        if(!term.currency.isEqual(this.currency)){
-            throw new NotSameCurrencyError;
+    add(amount: number): Money;
+    add(term: Money): Money;
+    add(term: any): Money{
+        let amount: number;
+        if(term instanceof Money){
+            if(!term.currency.isEqual(this.currency)){
+                throw new NotSameCurrencyError;
+            }
+            amount = term.amount;
         }
-        return new Money(this.amount + term.amount, this.currency);
+        else if(!isNaN(term)) {
+            amount = term;
+        }
+        else {
+            throw new TypeError;
+        }
+        return new Money(this.amount + amount, this.currency);
     }
-    subtract(subtrahend: Money): Money{
-        if(!subtrahend.currency.isEqual(this.currency)){
-            throw new NotSameCurrencyError;
+    subtract(amount: number): Money;
+    subtract(subtrahend: Money): Money;
+    subtract(subtrahend: any): Money{
+        let amount: number;
+        if(subtrahend instanceof Money){
+            if(!subtrahend.currency.isEqual(this.currency)){
+                throw new NotSameCurrencyError;
+            }
+            amount = subtrahend.amount;
         }
-        return new Money(this.amount - subtrahend.amount, this.currency);
+        else if(!isNaN(subtrahend)) {
+            amount = subtrahend;
+        }
+        else {
+            throw new TypeError;
+        }
+        return new Money(this.amount - amount, this.currency);
     }
 }
