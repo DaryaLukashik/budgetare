@@ -74,4 +74,16 @@ describe("Money", function(){
             }).to.throw(NotSameCurrencyError);
         });
     });
+    describe("isNegative()", function(){
+        it("checks money.amount is negative", function(){
+            let m = new Money(-5);
+            expect(m.isNegative()).to.equal(true);
+        });
+    });
+    describe("isZero()", function(){
+       it("checks money.amount is zero", function(){
+           let m = new Money(0);
+           expect(m.isZero()).to.equal(true);
+       });
+    });
 });

@@ -64,4 +64,12 @@ export default class Money{
         }
         return new Money(this.amount - amount, this.currency);
     }
+
+    isNegative(): boolean{
+       return this._amount < 0;
+    }
+
+    isZero(): boolean{
+        return this._amount === 0;
+    }
 }
